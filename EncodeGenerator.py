@@ -12,6 +12,7 @@ for path in path_list:
     image_list.append(cv2.imread(os.path.join(folder_path, path)))
     people_ids.append(os.path.splitext(path)[0])
 
+
 def find_encodings(images_list):
     encode_list = []
     for img in images_list:
@@ -21,6 +22,7 @@ def find_encodings(images_list):
 
     return encode_list
 
+
 print("Starting encode...")
 encode_list_known = find_encodings(image_list)
 encode_list_known_with_ids = [encode_list_known, people_ids]
@@ -28,4 +30,4 @@ print("Encoding complete!")
 
 file = open("EncodeFile.p", 'wb')
 pickle.dump(encode_list_known_with_ids, file)
-file.close
+file.close()
