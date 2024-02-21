@@ -4,6 +4,8 @@ import cv2
 import face_recognition
 import pickle
 
+from DataBase import save_img_to_storage
+
 folder_path = 'Images'
 path_list = os.listdir(folder_path)
 image_list = []
@@ -11,6 +13,8 @@ people_ids = []
 for path in path_list:
     image_list.append(cv2.imread(os.path.join(folder_path, path)))
     people_ids.append(os.path.splitext(path)[0])
+
+    save_img_to_storage(f"{folder_path}/{path}")
 
 
 def find_encodings(images_list):
