@@ -10,6 +10,7 @@ firebase_admin.initialize_app(cred, {
 })
 
 ref = db.reference('People')
+bucket = storage.bucket()
 
 data = {
     "159753":
@@ -17,24 +18,30 @@ data = {
             "name": "Iskenderov Arthur",
             "major": "Cadet",
             "starting_year": 2021,
-            "total_attendance": 6,
-            "last_attendance_time": "2024-02-21 11:35:20"
+            "total_attendance": 212,
+            "last_attendance_time": "2024-02-21 11:35:20",
+            "standing": "A",
+            "year": 3
         },
     "852741":
         {
             "name": "Kim Cherniy David",
             "major": "Cadet",
             "starting_year": 2021,
-            "total_attendance": 6,
-            "last_attendance_time": "2024-02-21 11:35:20"
+            "total_attendance": 212,
+            "last_attendance_time": "2024-02-21 11:35:20",
+            "standing": "C",
+            "year": 3
         },
     "963852":
         {
-            "name": "in future Kim, little bit niger Valeria",
+            "name": "Kim Valeria",
             "major": "Cadet",
             "starting_year": 2021,
-            "total_attendance": 6,
-            "last_attendance_time": "2024-02-21 11:35:20"
+            "total_attendance": 212,
+            "last_attendance_time": "2024-02-21 11:35:20",
+            "standing": "B",
+            "year": 3
         }
 }
 
@@ -43,6 +50,18 @@ for key, value in data.items():
 
 
 def save_img_to_storage(file_name):
-    bucket = storage.bucket()
     blob = bucket.blob(file_name)
     blob.upload_from_filename(file_name)
+
+
+def get_people(reference):
+    return db.reference(reference).get()
+
+
+def get_img(reference):
+    return bucket.get_blob(reference)
+
+
+def update_data(id, key, value):
+    reference = db.reference(f'People/{id}')
+    reference.child(key).set(value)
